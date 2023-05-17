@@ -6,6 +6,7 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { PostResolver } from "./resolvers/post";
 import "reflect-metadata";
+import { UsereResolver } from "./resolvers/user";
 
 const main = async () => {
   const orm = await MikroORM.init(mikroOrmConfig);
@@ -25,7 +26,7 @@ const main = async () => {
   // console.log(posts);
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [PostResolver],
+      resolvers: [PostResolver, UsereResolver],
       validate: false,
     }),
     context: () => ({ em: orm.em }), // can also add req and res here.
